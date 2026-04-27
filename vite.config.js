@@ -5,12 +5,13 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { tunnelPlugin } from './tunnel.js'
 
 export default defineConfig({
+  base: '/sea-words/',
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      manifest: false, // Use our own manifest.json in public/
+      manifest: false,
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,svg,ico,woff2}'],
         runtimeCaching: [
