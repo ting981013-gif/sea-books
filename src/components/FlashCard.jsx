@@ -143,16 +143,17 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
         className="w-full max-w-sm relative"
         style={{ perspective: '1000px', height: '520px' }}
       >
-        <motion.div
-          className="w-full h-full relative"
-          style={{ transformStyle: 'preserve-3d' }}
-          animate={{ rotateY: flipped ? 180 : 0 }}
-          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-        >
+        <div className="w-full h-full relative" style={{ transformStyle: 'preserve-3d' }}>
           {/* FRONT */}
-          <div
+          <motion.div
             className="absolute inset-0 flex flex-col"
-            style={{ ...cardBaseStyle, transform: 'rotateY(0deg) translateZ(1px)' }}
+            style={cardBaseStyle}
+            initial={{ rotateY: 0, opacity: 1 }}
+            animate={{
+              rotateY: flipped ? 180 : 0,
+              opacity: flipped ? 0 : 1,
+            }}
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
             onClick={() => setFlipped(f => !f)}
           >
             <div className="w-full h-full flex flex-col overflow-hidden rounded-[32px]">
@@ -209,12 +210,18 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* BACK */}
-          <div
+          <motion.div
             className="absolute inset-0 flex flex-col"
-            style={{ ...cardBaseStyle, transform: 'rotateY(180deg) translateZ(1px)' }}
+            style={cardBaseStyle}
+            initial={{ rotateY: 180, opacity: 0 }}
+            animate={{
+              rotateY: flipped ? 0 : 180,
+              opacity: flipped ? 1 : 0,
+            }}
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
             onClick={() => setFlipped(f => !f)}
           >
             <div className="w-full h-full flex flex-col overflow-hidden rounded-[32px]">
@@ -290,8 +297,8 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
                 <span className="text-[11px] text-indigo-300/40">{t?.('tapToFlip') || 'tap to flip'}</span>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   )
