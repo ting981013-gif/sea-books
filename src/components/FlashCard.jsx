@@ -22,25 +22,8 @@ function guessPhonetic(term) {
   return phonetic.slice(0, 16) + '/'
 }
 
-// Illustration scene component - uses emoji + decorative elements
-function TermIllustration({ term, emoji, size = 'large' }) {
-  const getAccents = () => {
-    const t = term.toLowerCase()
-    if (t.includes('heart') || t.includes('cardiac')) return ['💓', '❤️']
-    if (t.includes('brain') || t.includes('neur')) return ['⚡', '💡']
-    if (t.includes('bone') || t.includes('skelet')) return ['🦴', '💪']
-    if (t.includes('muscle')) return ['💪', '🏋️']
-    if (t.includes('lung') || t.includes('respir')) return ['🌬️', '💨']
-    if (t.includes('blood') || t.includes('arter') || t.includes('vein')) return ['🩸', '💉']
-    if (t.includes('eye') || t.includes('vision')) return ['👁️', '✨']
-    if (t.includes('cell')) return ['🔬', '🧫']
-    if (t.includes('hormon')) return ['⚗️', '🧪']
-    if (t.includes('skin') || t.includes('derm')) return ['🧴', '✨']
-    if (t.includes('kidney') || t.includes('renal')) return ['💧', '🫘']
-    return ['✨', '💫']
-  }
-
-  const [acc1, acc2] = getAccents()
+// Illustration scene component - clean centered emoji only
+function TermIllustration({ emoji, size = 'large' }) {
   const isLarge = size === 'large'
 
   return (
@@ -53,36 +36,12 @@ function TermIllustration({ term, emoji, size = 'large' }) {
         }}
       />
       <motion.div
-        animate={{ y: [0, -6, 0], rotate: [0, 5, 0] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-        className={`absolute ${isLarge ? 'text-2xl' : 'text-lg'}`}
-        style={{ top: '10%', left: '20%' }}
-      >
-        {acc1}
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 5, 0], rotate: [0, -5, 0] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-        className={`absolute ${isLarge ? 'text-xl' : 'text-base'}`}
-        style={{ bottom: '15%', right: '22%' }}
-      >
-        {acc2}
-      </motion.div>
-      <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-        className={`relative z-10 ${isLarge ? 'text-8xl' : 'text-5xl'}`}
+        className={`relative z-10 ${isLarge ? 'text-7xl' : 'text-4xl'}`}
       >
         {emoji || '🧬'}
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, -4, 0], rotate: [0, 3, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
-        className={`absolute z-20 ${isLarge ? 'text-3xl' : 'text-xl'}`}
-        style={{ bottom: '5%', right: '18%' }}
-      >
-        🐹
       </motion.div>
     </div>
   )
@@ -238,7 +197,7 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
 
             {/* Center illustration */}
             <div className="flex-1 flex flex-col items-center justify-center px-6">
-              <TermIllustration term={term.term} emoji={term.emoji} size="large" />
+              <TermIllustration emoji={term.emoji} size="large" />
             </div>
 
             {/* Bottom short definition */}
@@ -327,7 +286,7 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
 
             {/* Bottom illustration + flip hint */}
             <div className="px-6 pb-4 pt-1">
-              <TermIllustration term={term.term} emoji={term.emoji} size="small" />
+              <TermIllustration emoji={term.emoji} size="small" />
               <div className="text-center mt-1">
                 <span className="text-[11px] text-indigo-300/40">{t?.('tapToFlip') || 'tap to flip'}</span>
               </div>

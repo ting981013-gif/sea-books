@@ -1,8 +1,7 @@
 import * as pdfjsLib from 'pdfjs-dist'
 
-// Use CDN worker for compatibility with Vite
-const PDFJS_VERSION = pdfjsLib.version || '4.10.38'
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}/pdf.worker.min.mjs`
+// Use local worker bundled with the app (copied to public/ during build)
+pdfjsLib.GlobalWorkerOptions.workerSrc = `${import.meta.env.BASE_URL}pdf.worker.min.mjs`
 
 export async function parsePDF(file) {
   const arrayBuffer = await file.arrayBuffer()
