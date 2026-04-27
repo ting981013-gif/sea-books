@@ -5,7 +5,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { tunnelPlugin } from './tunnel.js'
 
 export default defineConfig({
-  base: '/sea-words/',
+  base: '/sea-books/',
   plugins: [
     react(),
     tailwindcss(),
