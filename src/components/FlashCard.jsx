@@ -127,6 +127,7 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
     boxShadow: '0 2px 8px rgba(99,102,241,0.06)',
     borderRadius: '32px',
     backfaceVisibility: 'hidden',
+    WebkitBackfaceVisibility: 'hidden',
   }
 
   return (
@@ -150,144 +151,142 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
         >
           {/* FRONT */}
           <div
-            className="absolute inset-0 flex flex-col overflow-hidden"
-            style={cardBaseStyle}
+            className="absolute inset-0 flex flex-col"
+            style={{ ...cardBaseStyle, transform: 'rotateY(0deg) translateZ(1px)' }}
             onClick={() => setFlipped(f => !f)}
           >
-            {/* Top header: term + star */}
-            <div className="flex items-start justify-between px-6 pt-6 pb-2">
-              <div className="flex-1">
-                <motion.h2
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="text-[26px] font-bold text-indigo-950 leading-tight"
-                >
-                  {term.term}
-                </motion.h2>
-                <div className="flex items-center gap-2 mt-1.5">
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-[15px] text-indigo-400/70 font-medium"
+            <div className="w-full h-full flex flex-col overflow-hidden rounded-[32px]">
+              {/* Top header: term + star */}
+              <div className="flex items-start justify-between px-6 pt-6 pb-2">
+                <div className="flex-1">
+                  <motion.h2
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="text-[26px] font-bold text-indigo-950 leading-tight"
                   >
-                    {phonetic}
-                  </motion.span>
-                  <button
-                    onClick={speak}
-                    className="w-7 h-7 rounded-full flex items-center justify-center text-indigo-400/50 hover:text-indigo-500 active:scale-90 transition-all"
-                    style={{ background: 'rgba(99,102,241,0.08)' }}
-                  >
-                    <SpeakerIcon />
-                  </button>
+                    {term.term}
+                  </motion.h2>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                      className="text-[15px] text-indigo-400/70 font-medium"
+                    >
+                      {phonetic}
+                    </motion.span>
+                    <button
+                      onClick={speak}
+                      className="w-7 h-7 rounded-full flex items-center justify-center text-indigo-400/50 hover:text-indigo-500 active:scale-90 transition-all"
+                      style={{ background: 'rgba(99,102,241,0.08)' }}
+                    >
+                      <SpeakerIcon />
+                    </button>
+                  </div>
                 </div>
+                <button
+                  onClick={(e) => { e.stopPropagation(); onToggleFavorite?.(term.term) }}
+                  className="w-10 h-10 rounded-full flex items-center justify-center transition-colors active:scale-90 shrink-0"
+                  style={{
+                    background: '#f8f8ff',
+                    color: isFavorite ? '#fbbf24' : '#c7d2fe',
+                  }}
+                >
+                  <StarIcon filled={isFavorite} />
+                </button>
               </div>
-              <button
-                onClick={(e) => { e.stopPropagation(); onToggleFavorite?.(term.term) }}
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-colors active:scale-90 shrink-0"
-                style={{
-                  background: '#f8f8ff',
-                  color: isFavorite ? '#fbbf24' : '#c7d2fe',
-                }}
-              >
-                <StarIcon filled={isFavorite} />
-              </button>
-            </div>
 
-            {/* Center illustration */}
-            <div className="flex-1 flex flex-col items-center justify-center px-6">
-              <TermIllustration emoji={term.emoji} size="large" />
-            </div>
+              {/* Center illustration */}
+              <div className="flex-1 flex flex-col items-center justify-center px-6">
+                <TermIllustration emoji={term.emoji} size="large" />
+              </div>
 
-            {/* Bottom short definition */}
-            <div className="px-6 pb-6 pt-2">
-              <p className="text-[14px] text-indigo-500/70 text-center leading-relaxed line-clamp-2">
-                {shortDef}
-              </p>
+              {/* Bottom short definition */}
+              <div className="px-6 pb-6 pt-2">
+                <p className="text-[14px] text-indigo-500/70 text-center leading-relaxed line-clamp-2">
+                  {shortDef}
+                </p>
+              </div>
             </div>
           </div>
 
           {/* BACK */}
           <div
-            className="absolute inset-0 flex flex-col overflow-hidden"
-            style={{
-              ...cardBaseStyle,
-              transform: 'rotateY(180deg)',
-            }}
+            className="absolute inset-0 flex flex-col"
+            style={{ ...cardBaseStyle, transform: 'rotateY(180deg) translateZ(1px)' }}
             onClick={() => setFlipped(f => !f)}
           >
-            {/* Top header: term + star */}
-            <div className="flex items-start justify-between px-6 pt-6 pb-2">
-              <div className="flex-1">
-                <h2 className="text-[22px] font-bold text-indigo-950 leading-tight">{term.term}</h2>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-[14px] text-indigo-400/70 font-medium">{phonetic}</span>
-                  <button
-                    onClick={speak}
-                    className="w-7 h-7 rounded-full flex items-center justify-center text-indigo-400/50 hover:text-indigo-500 active:scale-90 transition-all"
-                    style={{ background: 'rgba(99,102,241,0.08)' }}
-                  >
-                    <SpeakerIcon />
-                  </button>
-                </div>
-              </div>
-              <button
-                onClick={(e) => { e.stopPropagation(); onToggleFavorite?.(term.term) }}
-                className="w-9 h-9 rounded-full flex items-center justify-center transition-colors active:scale-90 shrink-0"
-                style={{
-                  background: '#f8f8ff',
-                  color: isFavorite ? '#fbbf24' : '#c7d2fe',
-                }}
-              >
-                <StarIcon filled={isFavorite} />
-              </button>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto px-6 py-3">
-              {/* Definition */}
-              <div className="mb-4">
-                <div className="text-[11px] font-bold text-indigo-500/70 uppercase tracking-[0.08em] mb-1.5">{t?.('definition') || 'Definition'}</div>
-                <p className="text-[15px] text-indigo-900/80 leading-relaxed">{cleanedDef}</p>
-              </div>
-
-              {/* Example */}
-              {example && (
-                <div className="mb-4">
-                  <div className="text-[11px] font-bold text-indigo-500/70 uppercase tracking-[0.08em] mb-1.5">{t?.('example') || 'Example'}</div>
-                  <p className="text-[15px] leading-relaxed text-indigo-700/70">
-                    {highlightTerm(example, term.term)}
-                  </p>
-                </div>
-              )}
-
-              {/* Topic / Chapters */}
-              {term.chapters?.length > 0 && (
-                <div className="mb-2">
-                  <div className="text-[11px] font-bold text-indigo-500/70 uppercase tracking-[0.08em] mb-1.5">Topic</div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {term.chapters.map(ch => (
-                      <span
-                        key={ch}
-                        className="text-[11px] font-semibold px-2.5 py-1 rounded-lg"
-                        style={{
-                          background: 'rgba(99,102,241,0.08)',
-                          color: '#818cf8',
-                        }}
-                      >
-                        Ch.{ch}
-                      </span>
-                    ))}
+            <div className="w-full h-full flex flex-col overflow-hidden rounded-[32px]">
+              {/* Top header: term + star */}
+              <div className="flex items-start justify-between px-6 pt-6 pb-2">
+                <div className="flex-1">
+                  <h2 className="text-[22px] font-bold text-indigo-950 leading-tight">{term.term}</h2>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-[14px] text-indigo-400/70 font-medium">{phonetic}</span>
+                    <button
+                      onClick={speak}
+                      className="w-7 h-7 rounded-full flex items-center justify-center text-indigo-400/50 hover:text-indigo-500 active:scale-90 transition-all"
+                      style={{ background: 'rgba(99,102,241,0.08)' }}
+                    >
+                      <SpeakerIcon />
+                    </button>
                   </div>
                 </div>
-              )}
-            </div>
+                <button
+                  onClick={(e) => { e.stopPropagation(); onToggleFavorite?.(term.term) }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-colors active:scale-90 shrink-0"
+                  style={{
+                    background: '#f8f8ff',
+                    color: isFavorite ? '#fbbf24' : '#c7d2fe',
+                  }}
+                >
+                  <StarIcon filled={isFavorite} />
+                </button>
+              </div>
 
-            {/* Bottom illustration + flip hint */}
-            <div className="px-6 pb-4 pt-1">
-              <TermIllustration emoji={term.emoji} size="small" />
-              <div className="text-center mt-1">
+              {/* Content */}
+              <div className="flex-1 overflow-y-auto px-6 py-3">
+                {/* Definition */}
+                <div className="mb-4">
+                  <div className="text-[11px] font-bold text-indigo-500/70 uppercase tracking-[0.08em] mb-1.5">{t?.('definition') || 'Definition'}</div>
+                  <p className="text-[15px] text-indigo-900/80 leading-relaxed">{cleanedDef}</p>
+                </div>
+
+                {/* Example */}
+                {example && (
+                  <div className="mb-4">
+                    <div className="text-[11px] font-bold text-indigo-500/70 uppercase tracking-[0.08em] mb-1.5">{t?.('example') || 'Example'}</div>
+                    <p className="text-[15px] leading-relaxed text-indigo-700/70">
+                      {highlightTerm(example, term.term)}
+                    </p>
+                  </div>
+                )}
+
+                {/* Topic / Chapters */}
+                {term.chapters?.length > 0 && (
+                  <div className="mb-2">
+                    <div className="text-[11px] font-bold text-indigo-500/70 uppercase tracking-[0.08em] mb-1.5">Topic</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {term.chapters.map(ch => (
+                        <span
+                          key={ch}
+                          className="text-[11px] font-semibold px-2.5 py-1 rounded-lg"
+                          style={{
+                            background: 'rgba(99,102,241,0.08)',
+                            color: '#818cf8',
+                          }}
+                        >
+                          Ch.{ch}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Bottom flip hint */}
+              <div className="px-6 pb-4 pt-1 text-center">
                 <span className="text-[11px] text-indigo-300/40">{t?.('tapToFlip') || 'tap to flip'}</span>
               </div>
             </div>
