@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+:root {
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+body {
+  margin: 0;
+  background: #f5f5ff;
+  color: #312e81;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+#root {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(238,235,255,0.6) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1), 0 2px 8px rgba(139, 92, 246, 0.06);
+}
+
+.liquid-gradient {
+  background: linear-gradient(135deg, #818cf8 0%, #a78bfa 50%, #7dd3fc 100%);
+}
+
+.liquid-gradient-soft {
+  background: linear-gradient(135deg, rgba(129,140,248,0.15) 0%, rgba(167,139,250,0.1) 50%, rgba(125,211,252,0.15) 100%);
+}
+
+.card-flip {
+  perspective: 1000px;
+}
+
+.card-flip-inner {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.card-flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  backface-visibility: hidden;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* Liquid blob decorations */
+.blob-1 {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(129,140,248,0.2), rgba(167,139,250,0.15));
+  filter: blur(60px);
+  top: -50px;
+  right: -80px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob-2 {
+  position: fixed;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(125,211,252,0.2), rgba(196,181,253,0.15));
+  filter: blur(60px);
+  bottom: 100px;
+  left: -60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.btn-gotIt {
+  background: linear-gradient(135deg, rgba(74,222,128,0.2), rgba(34,197,94,0.15));
+  border: 1px solid rgba(74,222,128,0.4);
+  color: #16a34a;
+}
+
+.btn-notSure {
+  background: linear-gradient(135deg, rgba(250,204,21,0.2), rgba(234,179,8,0.15));
+  border: 1px solid rgba(250,204,21,0.4);
+  color: #ca8a04;
+}
+
+.btn-forgot {
+  background: linear-gradient(135deg, rgba(248,113,113,0.2), rgba(239,68,68,0.15));
+  border: 1px solid rgba(248,113,113,0.4);
+  color: #dc2626;
+}
