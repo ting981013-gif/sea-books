@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { getExample } from '../utils/examples'
 import { cleanDefinition } from '../utils/cleanText'
+import { getTermImageUrl } from '../utils/illustration'
 
 // Simple phonetic guesser for anatomy terms
 function guessPhonetic(term) {
@@ -22,27 +23,40 @@ function guessPhonetic(term) {
   return phonetic.slice(0, 16) + '/'
 }
 
-// Illustration scene component - clean centered emoji only
-function TermIllustration({ emoji, size = 'large' }) {
-  const isLarge = size === 'large'
+// AI-generated illustration with emoji fallback
+function TermImage({ term, definition, type = 'front' }) {
+  const [loaded, setLoaded] = useState(false)
+  const [error, setError] = useState(false)
+  const url = getTermImageUrl(term, definition, type)
+  const isLarge = type === 'front'
+
+  if (error) {
+    return (
+      <div className={`relative w-full flex items-center justify-center ${isLarge ? 'py-6' : 'py-3'}`}>
+        <div className={`text-6xl ${isLarge ? '' : 'text-4xl'}`}>🧬</div>
+      </div>
+    )
+  }
 
   return (
-    <div className={`relative w-full flex items-center justify-center ${isLarge ? 'py-6' : 'py-3'}`}>
-      <div
-        className={`absolute rounded-full ${isLarge ? 'w-36 h-36' : 'w-24 h-24'}`}
+    <div className={`relative w-full flex items-center justify-center overflow-hidden ${isLarge ? 'py-2' : 'py-1'}`}>
+      {!loaded && (
+        <div className={`absolute inset-0 flex items-center justify-center ${isLarge ? 'text-6xl' : 'text-4xl'}`}>
+          🧬
+        </div>
+      )}
+      <img
+        src={url}
+        alt={term}
+        onLoad={() => setLoaded(true)}
+        onError={() => setError(true)}
+        className={`object-contain rounded-2xl transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         style={{
-          background: 'linear-gradient(135deg, rgba(139,92,246,0.08) 0%, rgba(99,102,241,0.04) 100%)',
-          filter: 'blur(10px)',
+          width: isLarge ? '100%' : '80%',
+          maxHeight: isLarge ? 220 : 130,
         }}
+        loading="lazy"
       />
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-        className={`relative z-10 ${isLarge ? 'text-7xl' : 'text-4xl'}`}
-      >
-        {emoji || '🧬'}
-      </motion.div>
     </div>
   )
 }
@@ -199,8 +213,8 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
               </div>
 
               {/* Center illustration */}
-              <div className="flex-1 flex flex-col items-center justify-center px-6">
-                <TermIllustration emoji={term.emoji} size="large" />
+              <div className="flex-1 flex flex-col items-center justify-center px-4">
+                <TermImage term={term.term} definition={cleanedDef} type="front" />
               </div>
 
               {/* Bottom short definition */}
@@ -269,6 +283,11 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
                     </p>
                   </div>
                 )}
+
+                {/* Back illustration */}
+                <div className="mb-4">
+                  <TermImage term={term.term} definition={example || cleanedDef} type="back" />
+                </div>
 
                 {/* Topic / Chapters */}
                 {term.chapters?.length > 0 && (
