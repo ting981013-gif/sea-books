@@ -4,10 +4,10 @@ import { HashRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
 
-// Register PWA service worker
+// Register PWA service worker (relative path works for both web and Tauri)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sea-books/sw.js')
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`)
       .then((reg) => console.log('SW registered:', reg.scope))
       .catch((err) => console.log('SW registration failed:', err))
   })
