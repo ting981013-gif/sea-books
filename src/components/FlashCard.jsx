@@ -292,6 +292,11 @@ export default function FlashCard({ term, onSwipeNext, onSwipePrev, isFavorite, 
                 )}
               </div>
 
+              {/* Back illustration */}
+              <div className="px-6 pb-2 flex justify-center">
+                <TermIllustration emoji={term.emoji} size="small" />
+              </div>
+
               {/* Bottom flip hint */}
               <div className="px-6 pb-4 pt-1 text-center">
                 <span className="text-[11px] text-indigo-300/40">{t?.('tapToFlip') || 'tap to flip'}</span>

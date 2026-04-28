@@ -173,7 +173,7 @@ export default function Learning({ store }) {
       </motion.div>
 
       {/* Card area */}
-      <div className="flex-1 relative pb-4">
+      <div className="flex-1 relative pt-3 pb-4">
         {isDone ? (
           <div className="flex flex-col items-center justify-center h-full px-6">
             <motion.div
