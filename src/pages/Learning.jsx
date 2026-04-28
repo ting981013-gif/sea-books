@@ -173,60 +173,58 @@ export default function Learning({ store }) {
       </motion.div>
 
       {/* Card area */}
-      <div className="flex-1 relative">
-        <div className="absolute inset-x-0 bottom-4" style={{ top: '16px' }}>
-          {isDone ? (
-            <div className="flex flex-col items-center justify-center h-full px-6">
-              <motion.div
-                initial={{ scale: 0, rotate: -20 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ type: 'spring', stiffness: 200, damping: 12 }}
-                className="text-6xl mb-4"
-              >
-                🎉
-              </motion.div>
-              <h2 className="text-2xl font-bold text-indigo-950 mb-2">{t('greatJob')}</h2>
-              <p className="text-indigo-400/70 text-center text-sm">
-                {t('completedGoal').replace('{{goal}}', goal)}
-              </p>
-              <div
-                className="mt-6 rounded-[24px] p-5 w-full max-w-xs"
-                style={{
-                  background: '#ffffff',
-                  border: '1px solid rgba(226,232,255,0.25)',
-                  boxShadow: '0 1px 3px rgba(99,102,241,0.04)',
-                }}
-              >
-                <div className="flex justify-around">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: '#34c759' }}>{completed.filter(c => c.category === 'gotIt').length}</div>
-                    <div className="text-[11px] text-indigo-400/60 font-medium mt-0.5">{t('gotItBtn')}</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: '#ff9f0a' }}>{completed.filter(c => c.category === 'notSure').length}</div>
-                    <div className="text-[11px] text-indigo-400/60 font-medium mt-0.5">{t('notSureBtn')}</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: '#ff3b30' }}>{completed.filter(c => c.category === 'forgot').length}</div>
-                    <div className="text-[11px] text-indigo-400/60 font-medium mt-0.5">{t('forgotBtn')}</div>
-                  </div>
+      <div className="flex-1 relative flex flex-col items-center justify-center py-4">
+        {isDone ? (
+          <div className="flex flex-col items-center justify-center h-full px-6">
+            <motion.div
+              initial={{ scale: 0, rotate: -20 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 12 }}
+              className="text-6xl mb-4"
+            >
+              🎉
+            </motion.div>
+            <h2 className="text-2xl font-bold text-indigo-950 mb-2">{t('greatJob')}</h2>
+            <p className="text-indigo-400/70 text-center text-sm">
+              {t('completedGoal').replace('{{goal}}', goal)}
+            </p>
+            <div
+              className="mt-6 rounded-[24px] p-5 w-full max-w-xs"
+              style={{
+                background: '#ffffff',
+                border: '1px solid rgba(226,232,255,0.25)',
+                boxShadow: '0 1px 3px rgba(99,102,241,0.04)',
+              }}
+            >
+              <div className="flex justify-around">
+                <div className="text-center">
+                  <div className="text-2xl font-bold" style={{ color: '#34c759' }}>{completed.filter(c => c.category === 'gotIt').length}</div>
+                  <div className="text-[11px] text-indigo-400/60 font-medium mt-0.5">{t('gotItBtn')}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold" style={{ color: '#ff9f0a' }}>{completed.filter(c => c.category === 'notSure').length}</div>
+                  <div className="text-[11px] text-indigo-400/60 font-medium mt-0.5">{t('notSureBtn')}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold" style={{ color: '#ff3b30' }}>{completed.filter(c => c.category === 'forgot').length}</div>
+                  <div className="text-[11px] text-indigo-400/60 font-medium mt-0.5">{t('forgotBtn')}</div>
                 </div>
               </div>
             </div>
-          ) : (
-            <AnimatePresence mode="popLayout">
-              <FlashCard
-                key={`${currentIndex}-${currentTerm?.term}`}
-                term={currentTerm}
-                onSwipeNext={handleSwipeNext}
-                onSwipePrev={handleSwipePrev}
-                isFavorite={favorites.includes(currentTerm?.term)}
-                onToggleFavorite={handleToggleFavorite}
-                t={t}
-              />
-            </AnimatePresence>
-          )}
-        </div>
+          </div>
+        ) : (
+          <AnimatePresence mode="popLayout">
+            <FlashCard
+              key={`${currentIndex}-${currentTerm?.term}`}
+              term={currentTerm}
+              onSwipeNext={handleSwipeNext}
+              onSwipePrev={handleSwipePrev}
+              isFavorite={favorites.includes(currentTerm?.term)}
+              onToggleFavorite={handleToggleFavorite}
+              t={t}
+            />
+          </AnimatePresence>
+        )}
       </div>
 
       {/* Swipe hint */}
