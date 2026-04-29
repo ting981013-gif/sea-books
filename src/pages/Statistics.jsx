@@ -10,45 +10,34 @@ function buildLineData(range, memory) {
   const ns = memory.notSure.length
   const fg = memory.forgot.length
 
-  // 不同时间范围的累计倍数，让 Week/Month/Year 的终值有区分度
-  const rangeFactor = range === 'Week' ? 1 : range === 'Month' ? 1.6 : 2.5
-
+  // Real data: all ranges show the same current totals since we don't have historical time-series data
   if (range === 'Year') {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    return months.map((m, i) => {
-      const factor = ((i + 1) / 12) * rangeFactor
-      return {
-        day: m,
-        gotIt: Math.max(0, Math.round(got * factor)),
-        notSure: Math.max(0, Math.round(ns * factor)),
-        forgot: Math.max(0, Math.round(fg * factor)),
-      }
-    })
+    return months.map((m, i) => ({
+      day: m,
+      gotIt: got,
+      notSure: ns,
+      forgot: fg,
+    }))
   }
 
   if (range === 'Month') {
-    return Array.from({ length: 4 }, (_, i) => {
-      const factor = ((i + 1) / 4) * rangeFactor
-      return {
-        day: `W${i + 1}`,
-        gotIt: Math.max(0, Math.round(got * factor)),
-        notSure: Math.max(0, Math.round(ns * factor)),
-        forgot: Math.max(0, Math.round(fg * factor)),
-      }
-    })
+    return Array.from({ length: 4 }, (_, i) => ({
+      day: `W${i + 1}`,
+      gotIt: got,
+      notSure: ns,
+      forgot: fg,
+    }))
   }
 
   // Week (default)
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  return days.map((d, i) => {
-    const factor = ((i + 1) / 7) * rangeFactor
-    return {
-      day: d,
-      gotIt: Math.max(0, Math.round(got * factor - (6 - i) * 0.3)),
-      notSure: Math.max(0, Math.round(ns * factor - (6 - i) * 0.2)),
-      forgot: Math.max(0, Math.round(fg * factor - (6 - i) * 0.1)),
-    }
-  })
+  return days.map((d) => ({
+    day: d,
+    gotIt: got,
+    notSure: ns,
+    forgot: fg,
+  }))
 }
 
 export default function Statistics({ store }) {

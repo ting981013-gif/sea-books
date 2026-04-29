@@ -227,16 +227,28 @@ export default function Learning({ store }) {
         )}
       </div>
 
-      {/* Swipe hint */}
+      {/* Swipe hint with clickable arrows */}
       {!isDone && currentTerm && (
         <div className="flex items-center justify-center gap-2 text-indigo-300/50 text-xs mt-2 mb-4">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <button
+            onClick={handleSwipePrev}
+            className="p-1 rounded-full hover:bg-indigo-100/50 active:scale-90 transition-all"
+            disabled={currentIndex === 0}
+            style={{ opacity: currentIndex === 0 ? 0.3 : 1 }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
           {t('swipeHint')}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <button
+            onClick={handleSwipeNext}
+            className="p-1 rounded-full hover:bg-indigo-100/50 active:scale-90 transition-all"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
         </div>
       )}
 

@@ -84,24 +84,6 @@ export default function Settings({ store }) {
         </div>
       </motion.div>
 
-      {/* Logout */}
-      <motion.button
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        onClick={handleLogout}
-        className="w-full py-3.5 rounded-[18px] text-[14px] font-bold active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-        style={{
-          background: 'linear-gradient(135deg, rgba(255,59,48,0.1) 0%, rgba(255,59,48,0.05) 100%)',
-          border: '1px solid rgba(255,59,48,0.2)',
-          color: '#ff3b30',
-        }}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        {t('logout')}
-      </motion.button>
     </div>
   )
 }

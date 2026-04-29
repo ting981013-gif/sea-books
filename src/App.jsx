@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useStore } from './store/useStore'
+import { useReminder } from './hooks/useReminder'
 import Layout from './components/Layout'
 import Learning from './pages/Learning'
 import Memory from './pages/Memory'
@@ -25,6 +26,7 @@ function OnboardingGuard({ store, children }) {
 
 export default function App() {
   const store = useStore()
+  useReminder(store.state.remindersEnabled)
 
   return (
     <Routes>

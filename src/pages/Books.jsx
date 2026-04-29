@@ -15,6 +15,7 @@ export default function Books({ store }) {
   const [uploadStatus, setUploadStatus] = useState(null) // { type: 'success' | 'error', message: string }
 
   const handleUploadClick = () => {
+    setUploadStatus(null)
     fileInputRef.current?.click()
   }
 
